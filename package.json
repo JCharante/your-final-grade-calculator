@@ -1,0 +1,19 @@
+{
+  "name": "your-final-grade-calculator",
+  "version": "0.0.1",
+  "description": "the module used in related projects",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JCharante/your-final-grade-calculator.git"
+  },
+  "author": "jcharnate <git@jcharante.com>",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/JCharante/your-final-grade-calculator/issues"
+  },
+  "homepage": "https://github.com/JCharante/your-final-grade-calculator#readme"
+}
