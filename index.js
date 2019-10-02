@@ -3,6 +3,7 @@ class ClassCalculator {
         this.categories = data.categories.map(c => Object.assign({}, c, { grades: data.grades.filter(a => a.category === c.name) }))
         this.grades = data.grades;
     }
+
     getCurrentGrade(){
         let total = 0;
         this.categories.forEach(element => {
@@ -43,8 +44,34 @@ class ClassCalculator {
         }
     }
 
-    getCatHighest(){
 
+    getHighestGrade(){
+        let total = 0;
+        this.categories.forEach(element => {
+            total += getCatHighest(element);
+        });
+        return total;
+    }
+    /**
+     *
+     * @param cat A string with the name of the Category
+     */
+    getCatHighest(cat){
+        cat = this.categories.filter(c => c.name === cat)[0];
+        let losePoints = 0;
+        let totalPoints = 0;
+        cat.grades.forEach(element => {
+            if(element.maxPoints){
+                totalPoints += element.pointsEarned;
+            }
+            if(element.possibleExtraCredit){
+                totalPoints += element.possibleExtraCredit;
+            }
+            if(element.maxPoints && element.pointsEarned) {
+                losePoints += element.maxPoints - element.pointsEarned;
+            }
+        });
+        return cat.weight*losePoints/totalPoints
     }
     
     getA() {
