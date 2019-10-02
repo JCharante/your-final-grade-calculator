@@ -7,7 +7,11 @@ class ClassCalculator {
     getCurrentGrade(){
         let total = 0;
         this.categories.forEach(element => {
-            total += this.getCatGrade(element.name);
+            let cur = this.getCatGrade(element.name);
+            if (element.maxPercent && cur > element.maxPercent){
+                cur = element.maxPercent;
+            }
+            total += cur*element.weight;
         });
         return total;
     }
@@ -153,6 +157,7 @@ class ClassCalculator {
         return this.data.a;
     }
 }
+
 
 
 module.exports = {
