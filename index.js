@@ -53,12 +53,12 @@ class ClassCalculator {
         return total;
     }
     /**
-     *
+     * Return the potential highest score for a category
      * @param cat A string with the name of the Category
      */
     getCatHighest(cat){
         cat = this.categories.filter(c => c.name === cat)[0];
-        let losePoints = 0;
+        let lostPoints = 0;
         let totalPoints = 0;
         cat.grades.forEach(element => {
             if(element.maxPoints){
@@ -68,10 +68,39 @@ class ClassCalculator {
                 totalPoints += element.possibleExtraCredit;
             }
             if(element.maxPoints && element.pointsEarned) {
-                losePoints += element.maxPoints - element.pointsEarned;
+                lostPoints += element.maxPoints - element.pointsEarned;
             }
         });
-        return cat.weight*losePoints/totalPoints
+        return cat.weight*lostPoints/totalPoints;
+    }
+
+    getLowestGrade(){
+        let total = 0;
+        this.categories.forEach(element => {
+            total += getCatLowest(element);
+        });
+        return total;
+    }
+    /**
+     * Return the potential lowest score for a category
+     * @param cat A string with the name of the Category
+     */
+    getCatLowest(cat){
+        cat = this.categories.filter(c => c.name === cat)[0];
+        let earnedPoints = 0;
+        let totalPoints = 0;
+        cat.grades.forEach(element => {
+            if(element.maxPoints){
+                totalPoints += element.pointsEarned;
+            }
+            if(element.possibleExtraCredit){
+                totalPoints += element.possibleExtraCredit;
+            }
+            if(element.maxPoints && element.pointsEarned) {
+                earnedPoints += element.pointsEarned;
+            }
+        });
+        return cat.weight*earnedPoints/totalPoints;
     }
     
     getA() {
