@@ -66,7 +66,7 @@ class ClassCalculator {
     getHighestGrade(){
         let total = 0;
         this.categories.forEach(element => {
-            total += getCatHighest(element.name);
+            total += this.getCatHighest(element.name);
         });
         return total;
     }
@@ -82,22 +82,24 @@ class ClassCalculator {
         let extraPoints = 0;
         cat.grades.forEach(element => {
             if(element.maxPoints){
-                totalPoints += element.pointsEarned;
+                totalPoints += element.maxPoints;
             }
-            if(element.possibleExtraCredit){
-                extraPoints += element.possibleExtraCredit;
+            if(element.possibleExtraScore){
+                extraPoints += element.possibleExtraScore;
             }
             if(element.maxPoints && element.pointsEarned) {
-                lostPoints += element.maxPoints - element.pointsEarned;
+                lostPoints += (element.maxPoints - element.pointsEarned);
             }
         });
-        return cat.weight*(1-(lostPoints+extraPoints)/totalPoints);
+
+        return cat.weight*(1-(lostPoints-extraPoints)/totalPoints);
+        //return totalPoints;
     }
 
     getLowestGrade(){
         let total = 0;
         this.categories.forEach(element => {
-            total += getCatLowest(element.name);
+            total += this.getCatLowest(element.name);
         });
         return total;
     }
