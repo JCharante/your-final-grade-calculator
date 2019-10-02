@@ -6,11 +6,61 @@ class ClassCalculator {
     getCurrentGrade(){
         let total = 0;
         this.categories.forEach(element => {
-            total += getCatGrade(element);
+            total += this.getCatGrade(element.name);
         });
         return total;
     }
     getCatGrade(cat){
+        cat = this.categories.filter(c => c.name === cat)[0];
+        
+        if (cat.buildUp == true){
+            if (cat.topWorthMore){
+                cat = this.dropGrades(cat);
+                let total = 0;
+                let max =  0;
+                for (let i = 0; i < cat.topWorthMore && i < cat.grades.length; i++){
+                    if (cat.grades[i].pointsEarned){
+                        let cur = cat.grades[i]
+                        total += (cur.pointsEarned/cur.maxPoints)*cat.topWorthValue;
+                        max += cat.topWorthMore;
+                    }
+                }
+                for (let i = cat.topWorthMore; i < cat.grades.length; i++){
+                    if (cat.grades[i].pointsEarned){
+                        let cur = cat.grades[i]
+                        total += (cur.pointsEarned/cur.maxPoints)*cat.botWorthValue;
+                        max += cat.topWorthMore;
+                    }
+                }
+                return max/total;
+            }
+            let total = 0;
+            let max = 0;
+            for (let i = 0; i < cat.grades.length; i++){
+                if (cat.grades[i].pointsEarned){
+                    let cur = cat.grades[i]
+                    total += cur.pointsEarned;
+                    max += cur.maxPoints;
+                }
+            }
+            return total/max;
+        }
+        let currentGrade = cat.maxPoints;
+        for (let i = 0; i < cat.grades.length; i++){
+            if (cat.grades[i].pointsEarned){
+                currentGrade -= cat.grades[i].maxPoints - cat.grades[i].pointsEarned;
+                if (currentGrade < 0){
+                    currentGrade = 0;
+                }
+            }
+        }
+        return currentGrade/cat.maxPoints;
+    }
+    
+    getA() {
+        return this.data.a;
+    }
+    dropGrades(cat){
         if (cat.droppedGrades){
             cat.grades.sort(function(a, b){
                 if (!a.pointsEarned && !b.pointsEarned){
@@ -32,15 +82,11 @@ class ClassCalculator {
             })
             cat.grades.splice(0,droppedGrades);
         }
-        if (cat.buildUp == true){
-            
-        }
-    }
-    
-    getA() {
-        return this.data.a;
+        return cat;
     }
 }
+
+
 
 module.exports = {
     ClassCalculator
