@@ -6,11 +6,16 @@ class ClassCalculator {
     getCurrentGrade(){
         let total = 0;
         this.categories.forEach(element => {
-            total += this.getCatGrade(element.name);
+            let cur = this.getCatGrade(element.name);
+            if (element.maxPercent && cur > element.maxPercent){
+                cur = element.maxPercent;
+            }
+            total += cur*element.weight;
         });
         return total;
     }
     getCatGrade(cat){
+        debugger;
         cat = this.categories.filter(c => c.name === cat)[0];
         
         if (cat.buildUp == true){
@@ -85,6 +90,17 @@ class ClassCalculator {
         return cat;
     }
 }
+
+var assert = require("assert");
+let categoryTest = {name: "tests", weight: 40, buildUp: true}
+let categoryProj = {name: "projects", weight: 60,  buildUp: true}
+let test1 = {category: "tests", name: "test1", maxPoints: 100, pointsEarned: 80}
+let test2 = {category: "tests", name: "test2", maxPoints: 100, pointsEarned: 100}
+let project1 = {category: "projects", name: "project1", maxPoints: 100, pointsEarned: 100};
+let class1 = {name: "csSomething", categories: [categoryTest, categoryProj], grades: [test1, test2, project1]}
+let classCalculator1 = new ClassCalculator(class1);
+let num = classCalculator1.getCurrentGrade();
+assert(num == 96);
 
 
 
