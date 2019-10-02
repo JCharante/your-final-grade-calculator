@@ -22,10 +22,10 @@ class ClassCalculator {
      */
     getCatGrade(cat){
         cat = this.categories.filter(c => c.name === cat)[0];
-
+        cat = this.dropGrades(cat);
         if (cat.buildUp == true){
             if (cat.topWorthMore){
-                cat = this.dropGrades(cat);
+
                 let total = 0;
                 let max =  0;
                 for (let i = 0; i < cat.topWorthMore && i < cat.grades.length; i++){
@@ -148,7 +148,7 @@ class ClassCalculator {
                 }
                 return 0;
             })
-            cat.grades.splice(0,droppedGrades);
+            cat.grades.splice(0,cat.droppedGrades);
         }
         return cat;
     }

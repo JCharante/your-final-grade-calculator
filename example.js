@@ -4,11 +4,17 @@ const Chem = new ClassCalculator({
     name: "Chem",
     categories: [{
         name: 'Homework Assignments',
-        weight: 100,
+        weight: 50,
         buildUp: true,
-        dropGrades: 1
-
-    }],
+        droppedGrades: 1
+        //maxPoints: 100
+    },
+        {
+            name: 'Exam',
+            weight: 50,
+            buildUp: true,
+            maxPoints: 100
+        }],
     grades: [{
         category: 'Homework Assignments',
         pointsEarned: 10,
@@ -28,15 +34,28 @@ const Chem = new ClassCalculator({
             category: 'Homework Assignments',
             pointsEarned: 12,
             maxPoints: 20,
+            possibleExtraScore: 10
         },
         {
             category: 'Homework Assignments',
             maxPoints: 20,
-            possibleExtraScore: 10
+            possibleExtraScore: 0
+        },
+        {
+            category: 'Exam',
+            pointsEarned: 70,
+            maxPoints: 100,
+            possibleExtraScore: 0
+        },
+        {
+            category: 'Exam',
+            pointsEarned: 80,
+            maxPoints: 100,
+            possibleExtraScore: 0
         }
     ]
 })
 
-console.log(Chem.getCatGrade('Homework Assignments'));
+console.log(Chem.getCurrentGrade('Homework Assignments'));
 console.log(Chem.getHighestGrade('Homework Assignments'));
 console.log(Chem.getLowestGrade('Homework Assignments'));
