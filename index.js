@@ -10,7 +10,13 @@ class ClassCalculator {
         });
         return total;
     }
+
+    /**
+     *
+     * @param cat A string with the name of the Category
+     */
     getCatGrade(cat){
+        cat = this.categories.filter(c => c.name === cat)[0];
         if (cat.droppedGrades){
             cat.grades.sort(function(a, b){
                 if (!a.pointsEarned && !b.pointsEarned){
@@ -35,6 +41,10 @@ class ClassCalculator {
         if (cat.buildUp == true){
             
         }
+    }
+
+    getCatHighest(){
+
     }
     
     getA() {
