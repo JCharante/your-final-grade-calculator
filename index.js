@@ -125,6 +125,7 @@ class ClassCalculator {
             }
         });
         return cat.weight*earnedPoints/totalPoints;
+        //return earnedPoints;
     }
 
 

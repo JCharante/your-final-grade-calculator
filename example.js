@@ -51,11 +51,23 @@ const Chem = new ClassCalculator({
             category: 'Exam',
             pointsEarned: 80,
             maxPoints: 100,
-            possibleExtraScore: 0
+            possibleExtraScore: 10
         }
     ]
 })
 
-console.log(Chem.getCurrentGrade('Homework Assignments'));
-console.log(Chem.getHighestGrade('Homework Assignments'));
-console.log(Chem.getLowestGrade('Homework Assignments'));
+//console.log(Chem.getCurrentGrade('Homework Assignments'));
+//console.log(Chem.getHighestGrade('Homework Assignments'));
+
+
+//console.log(Chem.getCurrentGrade('Exam'));
+//console.log(Chem.getHighestGrade('Exam'));
+console.log(Chem.getCurrentGrade());
+
+console.log(Chem.getCatHighest('Homework Assignments'));
+console.log(Chem.getCatHighest('Exam'));
+console.log(Chem.getHighestGrade());
+
+console.log(Chem.getCatLowest('Homework Assignments'));
+console.log(Chem.getCatLowest('Exam'));
+console.log(Chem.getLowestGrade());
