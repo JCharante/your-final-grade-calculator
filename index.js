@@ -1,8 +1,9 @@
 class ClassCalculator {
     constructor(data) {
-        this.categories = data.categories.map(c => Object.assign({}, c, { grades: data.grades.filter(a => a.category === c.name) }))
+        this.categories = data.categories.map(c => Object.assign({}, c, { grades: data.grades.filter(a => a.category === c.name) }));
         this.grades = data.grades;
     }
+
     getCurrentGrade(){
         let total = 0;
         this.categories.forEach(element => {
@@ -14,25 +15,29 @@ class ClassCalculator {
         });
         return total;
     }
+
+    /**
+     *
+     * @param cat A string with the name of the Category
+     */
     getCatGrade(cat){
-        debugger;
         cat = this.categories.filter(c => c.name === cat)[0];
-        
+        cat = this.dropGrades(cat);
         if (cat.buildUp == true){
             if (cat.topWorthMore){
-                cat = this.dropGrades(cat);
+
                 let total = 0;
                 let max =  0;
                 for (let i = 0; i < cat.topWorthMore && i < cat.grades.length; i++){
                     if (cat.grades[i].pointsEarned){
-                        let cur = cat.grades[i]
+                        let cur = cat.grades[i];
                         total += (cur.pointsEarned/cur.maxPoints)*cat.topWorthValue;
                         max += cat.topWorthMore;
                     }
                 }
                 for (let i = cat.topWorthMore; i < cat.grades.length; i++){
                     if (cat.grades[i].pointsEarned){
-                        let cur = cat.grades[i]
+                        let cur = cat.grades[i];
                         total += (cur.pointsEarned/cur.maxPoints)*cat.botWorthValue;
                         max += cat.topWorthMore;
                     }
@@ -43,7 +48,7 @@ class ClassCalculator {
             let max = 0;
             for (let i = 0; i < cat.grades.length; i++){
                 if (cat.grades[i].pointsEarned){
-                    let cur = cat.grades[i]
+                    let cur = cat.grades[i];
                     total += cur.pointsEarned;
                     max += cur.maxPoints;
                 }
@@ -61,10 +66,69 @@ class ClassCalculator {
         }
         return currentGrade/cat.maxPoints;
     }
-    
-    getA() {
-        return this.data.a;
+
+    getHighestGrade(){
+        let total = 0;
+        this.categories.forEach(element => {
+            total += this.getCatHighest(element.name);
+        });
+        return total;
     }
+    /**
+     * Return the potential highest score for a category
+     * @param cat A string with the name of the Category
+     */
+    getCatHighest(cat){
+        cat = this.dropGrades(cat);
+        cat = this.categories.filter(c => c.name === cat)[0];
+        let lostPoints = 0;
+        let totalPoints = 0;
+        let extraPoints = 0;
+        cat.grades.forEach(element => {
+            if(element.maxPoints){
+                totalPoints += element.maxPoints;
+            }
+            if(element.possibleExtraScore){
+                extraPoints += element.possibleExtraScore;
+            }
+            if(element.maxPoints && element.pointsEarned) {
+                lostPoints += (element.maxPoints - element.pointsEarned);
+            }
+        });
+
+        return cat.weight*(1-(lostPoints-extraPoints)/totalPoints);
+        //return totalPoints;
+    }
+
+    getLowestGrade(){
+        let total = 0;
+        this.categories.forEach(element => {
+            total += this.getCatLowest(element.name);
+        });
+        return total;
+    }
+    /**
+     * Return the potential lowest score for a category
+     * @param cat A string with the name of the Category
+     */
+    getCatLowest(cat){
+        cat = this.dropGrades(cat);
+        cat = this.categories.filter(c => c.name === cat)[0];
+        let earnedPoints = 0;
+        let totalPoints = 0;
+        cat.grades.forEach(element => {
+            if(element.maxPoints){
+                totalPoints += element.maxPoints;
+            }
+            if(element.maxPoints && element.pointsEarned) {
+                earnedPoints += element.pointsEarned;
+            }
+        });
+        return cat.weight*earnedPoints/totalPoints;
+        //return earnedPoints;
+    }
+
+
     dropGrades(cat){
         if (cat.droppedGrades){
             cat.grades.sort(function(a, b){
@@ -85,22 +149,15 @@ class ClassCalculator {
                 }
                 return 0;
             })
-            cat.grades.splice(0,droppedGrades);
+            cat.grades.splice(0,cat.droppedGrades);
         }
         return cat;
     }
-}
 
-var assert = require("assert");
-let categoryTest = {name: "tests", weight: 40, buildUp: true}
-let categoryProj = {name: "projects", weight: 60,  buildUp: true}
-let test1 = {category: "tests", name: "test1", maxPoints: 100, pointsEarned: 80}
-let test2 = {category: "tests", name: "test2", maxPoints: 100, pointsEarned: 100}
-let project1 = {category: "projects", name: "project1", maxPoints: 100, pointsEarned: 100};
-let class1 = {name: "csSomething", categories: [categoryTest, categoryProj], grades: [test1, test2, project1]}
-let classCalculator1 = new ClassCalculator(class1);
-let num = classCalculator1.getCurrentGrade();
-assert(num == 96);
+    getA() {
+        return this.data.a;
+    }
+}
 
 
 
