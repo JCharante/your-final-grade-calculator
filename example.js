@@ -6,6 +6,8 @@ const Chem = new ClassCalculator({
         name: 'Homework Assignments',
         weight: 50,
         buildUp: true,
+        droppedGrades: 0,
+
         topWorthMore: 3,
         topWorthValue: 0.3,
         botWorthValue: 0.05
@@ -24,22 +26,23 @@ const Chem = new ClassCalculator({
     },
         {
             category: 'Homework Assignments',
-            pointsEarned: 15,
+            pointsEarned: 10,
             maxPoints: 20,
         },
         {
             category: 'Homework Assignments',
-            pointsEarned: 13,
+            pointsEarned: 20,
             maxPoints: 20,
         },
         {
             category: 'Homework Assignments',
-            pointsEarned: 12,
+            pointsEarned: 20,
             maxPoints: 20,
             possibleExtraScore: 10
         },
         {
             category: 'Homework Assignments',
+           // pointsEarned: 20,
             maxPoints: 20,
             possibleExtraScore: 0
         },
@@ -64,15 +67,19 @@ const Chem = new ClassCalculator({
 
 //console.log(Chem.getCurrentGrade('Exam'));
 //console.log(Chem.getHighestGrade('Exam'));
+log(Chem.getCurrentGrade());
+
 console.log(Chem.getCatGrade('Homework Assignments'))
 console.log(Chem.getCatGrade('Homework Assignments'))
 console.log(Chem.getCurrentGrade());
 console.log(Chem.getCatGrade('Homework Assignments'))
 
-console.log(Chem.getCatHighest('Homework Assignments'));
-console.log(Chem.getCatHighest('Exam'));
-console.log(Chem.getHighestGrade());
 
-console.log(Chem.getCatLowest('Homework Assignments'));
-console.log(Chem.getCatLowest('Exam'));
-console.log(Chem.getLowestGrade());
+
+ console.log(Chem.getCatHighest('Homework Assignments'));
+// console.log(Chem.getCatHighest('Exam'));
+// console.log(Chem.getHighestGrade());
+//
+ console.log(Chem.getCatLowest('Homework Assignments'));
+//console.log(Chem.getCatLowest('Exam'));
+// console.log(Chem.getLowestGrade());
