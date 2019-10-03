@@ -7,6 +7,7 @@ const Chem = new ClassCalculator({
         weight: 50,
         buildUp: true,
         droppedGrades: 0,
+
         topWorthMore: 3,
         topWorthValue: 0.3,
         botWorthValue: 0.05
@@ -66,9 +67,13 @@ const Chem = new ClassCalculator({
 
 //console.log(Chem.getCurrentGrade('Exam'));
 //console.log(Chem.getHighestGrade('Exam'));
-// console.log(Chem.getCatGrade('Homework Assignments'));
-// console.log(Chem.getCatGrade('Exam'));
-// console.log(Chem.getCurrentGrade());
+log(Chem.getCurrentGrade());
+
+console.log(Chem.getCatGrade('Homework Assignments'))
+console.log(Chem.getCatGrade('Homework Assignments'))
+console.log(Chem.getCurrentGrade());
+console.log(Chem.getCatGrade('Homework Assignments'))
+
 
 
  console.log(Chem.getCatHighest('Homework Assignments'));

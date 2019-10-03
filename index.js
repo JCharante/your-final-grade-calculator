@@ -21,11 +21,11 @@ class ClassCalculator {
      * @param cat A string with the name of the Category
      */
     getCatGrade(cat){
-        cat = this.categories.filter(c => c.name === cat)[0];
+        cat = JSON.parse(JSON.stringify(this.categories.filter(c => c.name === cat)[0]));
         cat = this.dropGrades(cat);
         if (cat.buildUp == true){
             if (cat.topWorthMore){
-
+                cat = this.sortHighestFirst(cat);
                 let total = 0;
                 let max =  0;
                 for (let i = 0; i < cat.topWorthMore && i < cat.grades.length; i++){
@@ -42,7 +42,8 @@ class ClassCalculator {
                         max += cat.botWorthValue;
                     }
                 }
-                return max/total;
+                let temp = total/max;
+                return total/max;
             }
             let total = 0;
             let max = 0;
@@ -225,6 +226,30 @@ class ClassCalculator {
         }
         return cat;
     }
+    
+    sortHighestFirst(cat){
+            cat.grades.sort(function(a, b){
+                if (!a.pointsEarned && !b.pointsEarned){
+                    return 0;
+                }
+                else if (!a.pointsEarned){
+                    return 1;
+                }
+                else if (!b.pointsEarned){
+                    return -1;
+                }
+                if (a.pointsEarned/a.maxPoints > b.pointsEarned/b.maxPoints){
+                    return -1;
+                }
+                else if(a.pointsEarned/a.maxPoints < b.pointsEarned/b.maxPoints){
+                    return 1;
+                }
+                return 0;
+            })
+            return cat;
+    }
+
+
 
     getA() {
         return this.data.a;
