@@ -45,6 +45,9 @@ class ClassCalculator {
                     }
                 }
                 let temp = total/max;
+                if (max == 0){
+                    return 1;
+                }
                 return total/max;
             }
             let total = 0;
@@ -56,6 +59,9 @@ class ClassCalculator {
                     max += cur.maxPoints;
                 }
             }
+            if (max == 0){
+                return 1;
+            }
             return total/max;
         }
         let currentGrade = cat.maxPoints;
@@ -66,6 +72,9 @@ class ClassCalculator {
                     currentGrade = 0;
                 }
             }
+        }
+        if (cat.maxPoints == 0){
+            return 1;
         }
         return currentGrade/cat.maxPoints;
     }
