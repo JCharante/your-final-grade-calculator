@@ -21,7 +21,9 @@ class ClassCalculator {
      * @param cat A string with the name of the Category
      */
     getCatGrade(cat){
-        cat = JSON.parse(JSON.stringify(this.categories.filter(c => c.name === cat)[0]));
+        if (typeof cat === typeof "yo whats up bois I be a string"){
+            cat = JSON.parse(JSON.stringify(this.categories.filter(c => c.name === cat)[0]));
+        }
         cat = this.dropGrades(cat);
         if (cat.buildUp == true){
             if (cat.topWorthMore){
@@ -29,14 +31,14 @@ class ClassCalculator {
                 let total = 0;
                 let max =  0;
                 for (let i = 0; i < cat.topWorthMore && i < cat.grades.length; i++){
-                    if (cat.grades[i].pointsEarned){
+                    if (!(cat.grades[i].pointsEarned === undefined)){
                         let cur = cat.grades[i];
                         total += (cur.pointsEarned/cur.maxPoints)*cat.topWorthValue;
                         max += cat.topWorthValue;
                     }
                 }
                 for (let i = cat.topWorthMore; i < cat.grades.length; i++){
-                    if (cat.grades[i].pointsEarned){
+                    if (!(cat.grades[i].pointsEarned === undefined)){
                         let cur = cat.grades[i];
                         total += (cur.pointsEarned/cur.maxPoints)*cat.botWorthValue;
                         max += cat.botWorthValue;
@@ -48,7 +50,7 @@ class ClassCalculator {
             let total = 0;
             let max = 0;
             for (let i = 0; i < cat.grades.length; i++){
-                if (cat.grades[i].pointsEarned){
+                if (!(cat.grades[i].pointsEarned === undefined)){
                     let cur = cat.grades[i];
                     total += cur.pointsEarned;
                     max += cur.maxPoints;
@@ -58,7 +60,7 @@ class ClassCalculator {
         }
         let currentGrade = cat.maxPoints;
         for (let i = 0; i < cat.grades.length; i++){
-            if (cat.grades[i].pointsEarned){
+            if (!(cat.grades[i].pointsEarned === undefined)){
                 currentGrade -= cat.grades[i].maxPoints - cat.grades[i].pointsEarned;
                 if (currentGrade < 0){
                     currentGrade = 0;
@@ -80,61 +82,13 @@ class ClassCalculator {
      * @param cat A string with the name of the Category
      */
     getCatHighest(cat) {
-        cat = this.dropGrades(cat);
-        cat = this.categories.filter(c => c.name === cat)[0];
-        let tempGrade = JSON.parse(JSON.stringify(cat.grades)) ;
-
-        if (cat.topWorthMore) {
-            tempGrade.sort(function (a, b) {
-                if (!a.pointsEarned) {
-                    a.pointsEarned = a.maxPoints;
-                }
-                if (!b.pointsEarned) {
-                    b.pointsEarned = b.maxPoints;
-                }
-                return b.pointsEarned - a.pointsEarned;
-            })
-            let i = 0;
-            let totalPoints = 0;
-            let earnedPercent = 0;
-            tempGrade.forEach(element => {
-                if (i < cat.topWorthMore) {
-                    if (element.maxPoints) {
-                        totalPoints += element.maxPoints;
-                    }
-                    if (element.maxPoints && element.pointsEarned) {
-                        earnedPercent += cat.topWorthValue * element.pointsEarned / element.maxPoints;
-                    }
-                } else {
-                    if (element.maxPoints) {
-                        totalPoints += element.maxPoints;
-                    }
-                    if (element.maxPoints && element.pointsEarned) {
-                        earnedPercent += cat.botWorthValue * element.pointsEarned / element.maxPoints;
-                    }
-                }
-                i++;
-            });
-            return earnedPercent * totalPoints;
-        } else {
-            let lostPoints = 0;
-            let totalPoints = 0;
-            let extraPoints = 0;
-            cat.grades.forEach(element => {
-                if (element.maxPoints) {
-                    totalPoints += element.maxPoints;
-                }
-                if (element.possibleExtraScore) {
-                    extraPoints += element.possibleExtraScore;
-                }
-                if (element.maxPoints && element.pointsEarned) {
-                    lostPoints += (element.maxPoints - element.pointsEarned);
-                }
-            });
-
-            return cat.weight * (1 - (lostPoints - extraPoints) / totalPoints);
-            //return totalPoints;
-        }
+        cat = JSON.parse(JSON.stringify(this.categories.filter(c => c.name === cat)[0]));
+        cat.grades.forEach(element =>{
+            if (element.pointsEarned === undefined){
+                element.pointsEarned = element.maxPoints + (element.possibleExtraScore ? element.possibleExtraScore : 0);
+            }
+        })
+        return this.getCatGrade(cat);
     }
 
 
@@ -150,68 +104,26 @@ class ClassCalculator {
      * @param cat A string with the name of the Category
      */
     getCatLowest(cat){
-        cat = this.dropGrades(cat);
-        cat = this.categories.filter(c => c.name === cat)[0];
-        let tempGrade = JSON.parse(JSON.stringify(cat.grades));
-        if(cat.topWorthMore){
-            tempGrade.sort(function(a, b){
-              if(!a.pointsEarned) {
-                  a.pointsEarned = 0;
-              }
-                if(!b.pointsEarned) {
-                    b.pointsEarned = 0;
-                }
-                return  b.pointsEarned - a.pointsEarned;
-            })
-            let i = 0;
-            let totalPoints = 0;
-            let earnedPercent = 0;
-            tempGrade.forEach(element => {
-            if(i<cat.topWorthMore) {
-                if (element.maxPoints) {
-                    totalPoints += element.maxPoints;
-                }
-                if (element.maxPoints && element.pointsEarned) {
-                    earnedPercent += cat.topWorthValue * element.pointsEarned / element.maxPoints;
-                }
-            } else{
-                if (element.maxPoints) {
-                    totalPoints += element.maxPoints;
-                }
-                if (element.maxPoints && element.pointsEarned) {
-                    earnedPercent += cat.botWorthValue * element.pointsEarned / element.maxPoints;
-                }
+        cat = JSON.parse(JSON.stringify(this.categories.filter(c => c.name === cat)[0]));
+        cat.grades.forEach(element =>{
+            if (element.pointsEarned === undefined){
+                element.pointsEarned = 0;
             }
-            i++;
-        });
-        return earnedPercent*totalPoints;
-        } else {
-            let earnedPoints = 0;
-            let totalPoints = 0;
-            cat.grades.forEach(element => {
-                if(element.maxPoints){
-                    totalPoints += element.maxPoints;
-                }
-                if(element.maxPoints && element.pointsEarned) {
-                    earnedPoints += element.pointsEarned;
-                }
-            });
-        }
-
-        return cat.weight*earnedPoints/totalPoints;
+        })
+        return this.getCatGrade(cat);
     }
 
 
     dropGrades(cat){
         if (cat.droppedGrades){
             cat.grades.sort(function(a, b){
-                if (!a.pointsEarned && !b.pointsEarned){
+                if (a.pointsEarned === undefined && b.pointsEarned === undefined){
                     return 0;
                 }
-                else if (!a.pointsEarned){
+                else if (a.pointsEarned === undefined){
                     return 1;
                 }
-                else if (!b.pointsEarned){
+                else if (b.pointsEarned === undefined){
                     return -1;
                 }
                 if (a.maxPoints - a.pointsEarned > b.maxPoints - b.pointsEarned){
@@ -229,13 +141,13 @@ class ClassCalculator {
     
     sortHighestFirst(cat){
             cat.grades.sort(function(a, b){
-                if (!a.pointsEarned && !b.pointsEarned){
+                if (a.pointsEarned === undefined && b.pointsEarned === undefined){
                     return 0;
                 }
-                else if (!a.pointsEarned){
+                else if (a.pointsEarned === undefined){
                     return 1;
                 }
-                else if (!b.pointsEarned){
+                else if (b.pointsEarned === undefined){
                     return -1;
                 }
                 if (a.pointsEarned/a.maxPoints > b.pointsEarned/b.maxPoints){
