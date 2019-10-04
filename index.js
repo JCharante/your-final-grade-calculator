@@ -73,7 +73,7 @@ class ClassCalculator {
     getHighestGrade(){
         let total = 0;
         this.categories.forEach(element => {
-            total += this.getCatHighest(element.name);
+            total += this.getCatHighest(element.name)*element.weight;
         });
         return total;
     }
@@ -95,7 +95,7 @@ class ClassCalculator {
     getLowestGrade(){
         let total = 0;
         this.categories.forEach(element => {
-            total += this.getCatLowest(element.name);
+            total += this.getCatLowest(element.name)*element.weight;
         });
         return total;
     }
