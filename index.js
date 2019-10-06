@@ -169,12 +169,6 @@ class ClassCalculator {
             })
             return cat;
     }
-
-
-
-    getA() {
-        return this.data.a;
-    }
 }
 
 
