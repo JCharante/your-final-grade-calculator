@@ -1,6 +1,6 @@
 {
-  "name": "your-final-grade-calculator",
-  "version": "0.0.1",
+  "name": "your-final-grade-calculator-public",
+  "version": "0.0.2",
   "description": "the module used in related projects",
   "main": "index.js",
   "scripts": {

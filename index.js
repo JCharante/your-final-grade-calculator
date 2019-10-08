@@ -10,7 +10,6 @@ class ClassCalculator {
             let cur = this.getCatGrade(element.name);
             total += this.maxPercent(element,cur);
         });
-
         return total;
     }
 
