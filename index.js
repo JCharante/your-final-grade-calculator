@@ -8,11 +8,9 @@ class ClassCalculator {
         let total = 0;
         this.categories.forEach(element => {
             let cur = this.getCatGrade(element.name);
-            if (element.maxPercent && cur > element.maxPercent){
-                cur = element.maxPercent;
-            }
-            total += cur*element.weight;
+            total += this.maxPercent(element,cur);
         });
+
         return total;
     }
 
@@ -82,7 +80,9 @@ class ClassCalculator {
     getHighestGrade(){
         let total = 0;
         this.categories.forEach(element => {
-            total += this.getCatHighest(element.name)*element.weight;
+            //total += this.getCatHighest(element.name)*element.weight;
+            let cur = this.getCatHighest(element.name);
+            total += this.maxPercent(element,cur);
         });
         return total;
     }
@@ -104,7 +104,9 @@ class ClassCalculator {
     getLowestGrade(){
         let total = 0;
         this.categories.forEach(element => {
-            total += this.getCatLowest(element.name)*element.weight;
+            //total += this.getCatLowest(element.name)*element.weight;
+            let cur = this.getCatLowest(element.name);
+            total += this.maxPercent(element,cur);
         });
         return total;
     }
@@ -168,6 +170,17 @@ class ClassCalculator {
                 return 0;
             })
             return cat;
+    }
+
+    maxPercent(ele,cur){
+
+        let curTotal = cur*ele.weight;
+
+        // console.log(element.maxPercent);
+        if (ele.maxPercent && curTotal > ele.maxPercent){
+            curTotal = ele.maxPercent;
+        }
+        return curTotal;
     }
 
 

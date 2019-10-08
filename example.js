@@ -6,7 +6,7 @@ const Chem = new ClassCalculator({
         name: 'Homework Assignments',
         weight: 50,
         buildUp: true,
-
+        maxPercent:60,
         topWorthValue: 0.3,
         botWorthValue: 0.05
         //maxPoints: 100
@@ -34,7 +34,7 @@ const Chem = new ClassCalculator({
         },
         {
             category: 'Homework Assignments',
-            pointsEarned: 20,
+            pointsEarned: 30,
             maxPoints: 20,
             possibleExtraScore: 10
         },
