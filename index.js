@@ -28,14 +28,14 @@ class ClassCalculator {
                 let total = 0;
                 let max =  0;
                 for (let i = 0; i < cat.topWorthMore && i < cat.grades.length; i++){
-                    if (!(cat.grades[i].pointsEarned === undefined)){
+                    if (!(cat.grades[i].notYetGraded)){
                         let cur = cat.grades[i];
                         total += (cur.pointsEarned/cur.maxPoints)*cat.topWorthValue;
                         max += cat.topWorthValue;
                     }
                 }
                 for (let i = cat.topWorthMore; i < cat.grades.length; i++){
-                    if (!(cat.grades[i].pointsEarned === undefined)){
+                    if (!(cat.grades[i].notYetGraded)){
                         let cur = cat.grades[i];
                         total += (cur.pointsEarned/cur.maxPoints)*cat.botWorthValue;
                         max += cat.botWorthValue;
@@ -50,7 +50,7 @@ class ClassCalculator {
             let total = 0;
             let max = 0;
             for (let i = 0; i < cat.grades.length; i++){
-                if (!(cat.grades[i].pointsEarned === undefined)){
+                if (!(cat.grades[i].notYetGraded)){
                     let cur = cat.grades[i];
                     total += cur.pointsEarned;
                     max += cur.maxPoints;
@@ -63,7 +63,7 @@ class ClassCalculator {
         }
         let currentGrade = cat.maxPoints;
         for (let i = 0; i < cat.grades.length; i++){
-            if (!(cat.grades[i].pointsEarned === undefined)){
+            if (!(cat.grades[i].notYetGraded)){
                 currentGrade -= cat.grades[i].maxPoints - cat.grades[i].pointsEarned;
                 if (currentGrade < 0){
                     currentGrade = 0;
