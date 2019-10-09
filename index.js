@@ -92,7 +92,7 @@ class ClassCalculator {
     getCatHighest(cat) {
         cat = JSON.parse(JSON.stringify(this.categories.filter(c => c.name === cat)[0]));
         cat.grades.forEach(element =>{
-            if (element.pointsEarned === undefined){
+            if (element.pointsEarned === undefined || element.notYetGraded){
                 element.pointsEarned = element.maxPoints + (element.possibleExtraScore ? element.possibleExtraScore : 0);
             }
         })
@@ -116,7 +116,7 @@ class ClassCalculator {
     getCatLowest(cat){
         cat = JSON.parse(JSON.stringify(this.categories.filter(c => c.name === cat)[0]));
         cat.grades.forEach(element =>{
-            if (element.pointsEarned === undefined){
+            if (element.pointsEarned === undefined || element.notYetGraded){
                 element.pointsEarned = 0;
             }
         })
