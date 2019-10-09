@@ -127,13 +127,13 @@ class ClassCalculator {
     dropGrades(cat){
         if (cat.droppedGrades){
             cat.grades.sort(function(a, b){
-                if (a.pointsEarned === undefined && b.pointsEarned === undefined){
+                if (a.notYetGraded && b.notYetGraded){
                     return 0;
                 }
-                else if (a.pointsEarned === undefined){
+                else if (a.notYetGraded){
                     return 1;
                 }
-                else if (b.pointsEarned === undefined){
+                else if (b.notYetGraded){
                     return -1;
                 }
                 if (a.maxPoints - a.pointsEarned > b.maxPoints - b.pointsEarned){
@@ -151,13 +151,13 @@ class ClassCalculator {
     
     sortHighestFirst(cat){
             cat.grades.sort(function(a, b){
-                if (a.pointsEarned === undefined && b.pointsEarned === undefined){
+                if (a.notYetGraded && b.notYetGraded){
                     return 0;
                 }
-                else if (a.pointsEarned === undefined){
+                else if (a.notYetGraded){
                     return 1;
                 }
-                else if (b.pointsEarned === undefined){
+                else if (b.notYetGraded){
                     return -1;
                 }
                 if (a.pointsEarned/a.maxPoints > b.pointsEarned/b.maxPoints){
