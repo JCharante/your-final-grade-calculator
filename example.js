@@ -4,44 +4,47 @@ const Chem = new ClassCalculator({
     name: "Chem",
     categories: [{
         name: 'Homework Assignments',
-        weight: 50,
+        weight: 100,
         buildUp: true,
-        maxPercent:60,
-        topWorthValue: 0.3,
-        botWorthValue: 0.05
-        //maxPoints: 100
+        droppedGrades:1,
+       // maxPercent:60,
+        //topWorthValue: 0.3,
+       // botWorthValue: 0.05
+        maxPoints: 100
     },
         {
             name: 'Exam',
-            weight: 50,
+            weight: 0,
             buildUp: true,
             maxPoints: 100
         }],
     grades: [{
         category: 'Homework Assignments',
-        pointsEarned: 20,
-        maxPoints: 20,
+        pointsEarned: 80,
+        maxPoints: 100,
     },
         {
             category: 'Homework Assignments',
-            pointsEarned: 20,
-            maxPoints: 20,
+            pointsEarned: 90,
+            maxPoints: 100,
         },
         {
             category: 'Homework Assignments',
-            pointsEarned: 20,
-            maxPoints: 20,
+            pointsEarned: 100,
+            maxPoints: 100,
         },
         {
             category: 'Homework Assignments',
-            pointsEarned: 30,
-            maxPoints: 20,
-            possibleExtraScore: 10
+            pointsEarned: 0,
+            maxPoints: 100,
+            notYetGraded:true,
+            possibleExtraScore: 0
         },
         {
             category: 'Homework Assignments',
-            pointsEarned: 20,
-            maxPoints: 20,
+            pointsEarned:0 ,
+            maxPoints: 100,
+            notYetGraded:true,
             possibleExtraScore: 0
         },
         {
@@ -69,7 +72,7 @@ console.log(Chem.getCurrentGrade());
 
 //console.log(Chem.getCatGrade('Homework Assignments'))
 //console.log(Chem.getCatGrade('Homework Assignments'))
-console.log(Chem.getCurrentGrade());
+//console.log(Chem.getCurrentGrade());
 //console.log(Chem.getCatGrade('Homework Assignments'))
 
 
