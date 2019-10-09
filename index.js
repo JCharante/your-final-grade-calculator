@@ -131,12 +131,18 @@ class ClassCalculator {
      */
     getCatLowest(cat){
         cat = JSON.parse(JSON.stringify(this.categories.filter(c => c.name === cat)[0]));
-        cat.grades.forEach(element =>{
-            if (element.pointsEarned === undefined || element.notYetGraded){
-                element.pointsEarned = 0;
-            }
-        })
-        return this.getCatGrade(cat,false);
+        console.log(cat.grades);
+        if(cat.grades.length == 0){
+           return 0;
+        } else {
+
+            cat.grades.forEach(element => {
+                if (element.pointsEarned === undefined || element.notYetGraded) {
+                    element.pointsEarned = 0;
+                }
+            })
+            return this.getCatGrade(cat, false);
+        }
     }
 
 

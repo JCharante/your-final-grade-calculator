@@ -4,7 +4,7 @@ const Chem = new ClassCalculator({
     name: "Chem",
     categories: [{
         name: 'Homework Assignments',
-        weight: 100,
+        weight: 50,
         buildUp: true,
         droppedGrades:1,
        // maxPercent:60,
@@ -14,7 +14,7 @@ const Chem = new ClassCalculator({
     },
         {
             name: 'Exam',
-            weight: 0,
+            weight: 50,
             buildUp: true,
             maxPoints: 100
         }],
@@ -46,18 +46,6 @@ const Chem = new ClassCalculator({
             maxPoints: 100,
             notYetGraded:true,
             possibleExtraScore: 0
-        },
-        {
-            category: 'Exam',
-            //pointsEarned: 100,
-            maxPoints: 100,
-            possibleExtraScore: 0
-        },
-        {
-            category: 'Exam',
-            //pointsEarned: 80,
-            maxPoints: 100,
-            possibleExtraScore: 10
         }
     ]
 })
